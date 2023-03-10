@@ -1,12 +1,14 @@
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class Particle {
 
     private float x;
     private float y;
     private float radius;
-    private List<Particle> neighbours = new ArrayList<>();
+
+    //Con el método cim logro no tener repetidos,
+    // excepto que dos partículas estén en la misma cell
+    private Set<Particle> neighbours = new HashSet<>();
 
     private int xCell;
     private int yCell;
@@ -37,11 +39,11 @@ public class Particle {
         this.radius = radius;
     }
 
-    public List<Particle> getNeighbours() {
+    public Set<Particle> getNeighbours() {
         return neighbours;
     }
 
-    public void setNeighbours(List<Particle> neighbours) {
+    public void setNeighbours(Set<Particle> neighbours) {
         this.neighbours = neighbours;
     }
 
