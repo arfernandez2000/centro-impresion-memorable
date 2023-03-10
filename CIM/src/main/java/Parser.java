@@ -6,12 +6,19 @@ import java.util.Scanner;
 
 public class Parser {
 
-    public static void staticParser(List<Particle> particles, int N, int L, double r, String staticFile) throws Exception {
+    /**
+     * Lee del archivo de valores estáticos para poder guardad las partículas y algunas propiedades
+     * @param particles Lista de partículas vacía
+     * @param staticFile Path al archivo de valores estáticos
+     * @param properties Objeto de propiedades del sistema
+     * @throws Exception Por errores de lectura y apertura de archivos
+     */
+    public static void staticParser(List<Particle> particles, String staticFile, Properties properties) throws Exception {
         File file = new File(staticFile);
         Scanner sc = new Scanner(file);
 
-        N = sc.nextInt();
-        L = sc.nextInt();
+        properties.setN(sc.nextInt());
+        properties.setL(sc.nextInt());
 
         while (sc.hasNextLine()){
             Particle particle = new Particle();
@@ -21,11 +28,19 @@ public class Parser {
             particles.add(particle);
         }
 
-        r = particles.get(0).getRadius();
-        
+        properties.setR(particles.get(0).getRadius());
+
         sc.close();
+
     }
 
+    /**
+     * Lee del archivo de valores dinámicos para poder guardad las posiciones de las partículas
+     * @param particles Lista de partículas
+     * @param dynamicFile Path al archivo de valores estáticos
+     * @throws FileNotFoundException Por errores de lectura y apertura de archivos
+     *
+     */
     public static void dynamicParser(List<Particle> particles, String dynamicFile) throws FileNotFoundException {
         File file = new File(dynamicFile);
         Scanner sc = new Scanner(file);
@@ -38,5 +53,7 @@ public class Parser {
             particles.get(i).setY(sc.nextFloat());
             i++;
         }
+
+        sc.close();
     }
 }
