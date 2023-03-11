@@ -7,8 +7,7 @@ public class Properties {
     private boolean brute;
     private boolean periodic;
 
-    public Properties() {
-    }
+    public Properties() { }
 
     public int getN() {
         return N;
