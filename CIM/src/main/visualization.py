@@ -1,3 +1,4 @@
+import sys
 import numpy as np
 import matplotlib.pyplot as plt
 from numpy import pi
@@ -5,7 +6,7 @@ from numpy import pi
 x = []
 y = []
 
-particle_index = 3
+particle_index = int(sys.argv[1])
 
 with open('./resources/input_static.txt') as static:
     s_lines = static.readlines()
