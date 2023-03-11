@@ -54,9 +54,6 @@ public class CIM {
     private static void bruteForceMethod(Properties prop, List<Particle> particles) {
         for (Particle p1 : particles) {
             for (Particle p2 : particles) {
-                if (p2.getId() == 74 && p1.getId() == 7) {
-                    System.out.println("hola");
-                }
                 if (p1.equals(p2)) continue;
                 float dist_x = p1.getX() - p2.getX();
                 float dist_y = p1.getY() - p2.getY();
