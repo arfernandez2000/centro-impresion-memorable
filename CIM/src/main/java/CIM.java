@@ -25,7 +25,7 @@ public class CIM {
             properties.setR_c(15);
 
         if (properties.getM() != null){
-            if(properties.getL()/(float) properties.getM() <= (properties.getR_c()) + 2* properties.getR()) {
+            if(properties.getL()/(float) properties.getM() <= (properties.getR_c() + 2* properties.getR())) {
                 System.out.println("M no cumple la condición de desigualdad");
                 return;
             }
@@ -39,7 +39,11 @@ public class CIM {
         }
 
         try {
-            FileWriter myWriter = new FileWriter("src/main/resources/output.txt");
+            FileWriter myWriter;
+            if(properties.isBrute())
+                myWriter = new FileWriter("src/main/resources/output_brute.txt");
+            else
+                myWriter = new FileWriter("src/main/resources/output.txt");
             for (Particle p: particles) {
                 myWriter.write(p.getId() + "\t" + p.printNeighbour() + "\n");
             }
@@ -54,12 +58,9 @@ public class CIM {
     private static void bruteForceMethod(Properties prop, List<Particle> particles) {
         for (Particle p1 : particles) {
             for (Particle p2 : particles) {
-                if (p2.getId() == 74 && p1.getId() == 7) {
-                    System.out.println("hola");
-                }
                 if (p1.equals(p2)) continue;
-                float dist_x = p1.getX() - p2.getX();
-                float dist_y = p1.getY() - p2.getY();
+                float dist_x = Math.abs(p1.getX() - p2.getX());
+                float dist_y = Math.abs(p1.getY() - p2.getY());
                 float delta_x = dist_x;
                 float delta_y = dist_y;
                 if (prop.isPeriodic()) {
@@ -99,30 +100,46 @@ public class CIM {
             for (Particle p : cellParticles){
 
                 int cellX = p.getxCell();
-                int cellY = p.getxCell();
+                int cellY = p.getyCell();
 
-                findNeighbour(p, cellX, cellY);
-                findNeighbour(p, cellX, cellY + 1);
-                findNeighbour(p, cellX + 1, cellY + 1);
-                findNeighbour(p, cellX + 1, cellY);
-                findNeighbour(p, cellX + 1, cellY - 1);
+                findNeighbour(p, cellX, cellY, 0);
+                findNeighbour(p, cellX, cellY + 1, 1);
+                findNeighbour(p, cellX + 1, cellY + 1, 2);
+                findNeighbour(p, cellX + 1, cellY, 3);
+                findNeighbour(p, cellX + 1, cellY - 1, 4);
             }
         }
 
     }
 
-    private static void findNeighbour(Particle particle, int cellX, int cellY) {
-        if (cellX >= properties.getM() || cellX < 0 || cellY >= properties.getM() || cellY < 0) {
-            return;
+    private static void findNeighbour(Particle particle, int cellX, int cellY, int space) {
+        if (!properties.isPeriodic()) {
+            if (cellX >= properties.getM() || cellY >= properties.getM() || cellY < 0) {
+                return;
+            }
+        } else {
+            cellY = (cellY + properties.getM()) % properties.getM();
+            cellX = (cellX + properties.getM()) % properties.getM();
         }
         int neigCellIndex = (cellY * properties.getM() + cellX);
 
         List<Particle> particles = cells.get(neigCellIndex);
 
+
         for (Particle neigParticle : particles){
             //Chequear que no sean la misma
             if (!neigParticle.equals(particle)){
-                double distance = Math.sqrt(Math.pow(particle.getX() - neigParticle.getX(), 2) + Math.pow(particle.getY() - neigParticle.getY(), 2))
+                float dist_x = Math.abs(particle.getX() - neigParticle.getX());
+                float dist_y = Math.abs(particle.getY() - neigParticle.getY());
+                float delta_x = dist_x;
+                float delta_y = dist_y;
+
+                if (properties.isPeriodic()) {
+                    delta_x = Math.min(properties.getL() - dist_x, dist_x);
+                    delta_y = Math.min(properties.getL() - dist_y, dist_y);
+                }
+
+                double distance = Math.sqrt(Math.pow(delta_x, 2) + Math.pow(delta_y, 2))
                         - 2 * particle.getRadius();
 
                 if (distance < properties.getR_c()){
