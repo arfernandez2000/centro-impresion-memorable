@@ -1,3 +1,5 @@
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -36,8 +38,17 @@ public class CIM {
         if(!properties.isBrute())
             cellIndexMethod(properties, particles);
 
-        for (Particle p: particles) {
-            System.out.println(p);
+
+
+        try {
+            FileWriter myWriter = new FileWriter("src/main/resources/output.txt");
+            for (Particle p: particles) {
+                myWriter.write(p.getId() + "\t" + p.printNeighbour() + "\n");
+            }
+            myWriter.close();
+        } catch (IOException e) {
+            System.out.println("Ocurrió un error al abrir el output.txt.");
+            e.printStackTrace();
         }
 
     }

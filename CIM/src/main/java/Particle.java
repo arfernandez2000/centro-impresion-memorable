@@ -80,15 +80,7 @@ public class Particle {
 
     @Override
     public String toString() {
-        return "Particle{" +
-                "x=" + x +
-                ", y=" + y +
-                ", radius=" + radius +
-                ", neighboursCount=" + neighbours.size() +
-                ", xCell=" + xCell +
-                ", yCell=" + yCell +
-                ", id= " + id +
-                '}';
+        return String.valueOf(id);
     }
 
     @Override
@@ -113,5 +105,10 @@ public class Particle {
 
     public void addNeighbour(Particle particle) {
         this.neighbours.add(particle);
+    }
+
+    public String printNeighbour() {
+        String neighboursList = this.neighbours.toString();
+        return neighboursList.substring(1, neighboursList.length() - 1);
     }
 }
