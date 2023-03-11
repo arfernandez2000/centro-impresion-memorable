@@ -2,6 +2,10 @@ import java.util.*;
 
 public class Particle {
 
+    private int id;
+
+    private static int s_id = 0;
+
     private float x;
     private float y;
     private float radius;
@@ -13,7 +17,10 @@ public class Particle {
     private int xCell;
     private int yCell;
 
-    public Particle() { }
+    public Particle() {
+        id = s_id++;
+    }
+
 
     public float getX() {
         return x;
@@ -63,6 +70,14 @@ public class Particle {
         this.yCell = yCell;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     @Override
     public String toString() {
         return "Particle{" +
@@ -72,6 +87,7 @@ public class Particle {
                 ", neighboursCount=" + neighbours.size() +
                 ", xCell=" + xCell +
                 ", yCell=" + yCell +
+                ", id= " + id +
                 '}';
     }
 
