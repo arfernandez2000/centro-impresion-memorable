@@ -1,0 +1,14 @@
+N: 10000
+M: 13 Tiempo: 257 ms
+M: 12 Tiempo: 123 ms
+M: 11 Tiempo: 90 ms
+M: 10 Tiempo: 99 ms
+M: 9 Tiempo: 142 ms
+M: 8 Tiempo: 129 ms
+M: 7 Tiempo: 144 ms
+M: 6 Tiempo: 165 ms
+M: 5 Tiempo: 197 ms
+M: 4 Tiempo: 251 ms
+M: 3 Tiempo: 356 ms
+M: 2 Tiempo: 620 ms
+M: 1 Tiempo: 1206 ms

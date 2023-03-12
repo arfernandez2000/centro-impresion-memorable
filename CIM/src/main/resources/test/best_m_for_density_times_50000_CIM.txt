@@ -1,0 +1,14 @@
+N: 50000
+M: 13 Tiempo: 4468 ms
+M: 12 Tiempo: 3750 ms
+M: 11 Tiempo: 4026 ms
+M: 10 Tiempo: 4404 ms
+M: 9 Tiempo: 4904 ms
+M: 8 Tiempo: 5621 ms
+M: 7 Tiempo: 6510 ms
+M: 6 Tiempo: 7705 ms
+M: 5 Tiempo: 9405 ms
+M: 4 Tiempo: 12135 ms
+M: 3 Tiempo: 17435 ms
+M: 2 Tiempo: 26632 ms
+M: 1 Tiempo: 44579 ms

@@ -7,6 +7,8 @@ public class Properties {
     private boolean brute;
     private boolean periodic;
 
+    private boolean test;
+
     public Properties() { }
 
     public int getN() {
@@ -29,9 +31,6 @@ public class Properties {
         return M;
     }
 
-    public void setM(int m) {
-        M = m;
-    }
 
     public float getR() {
         return r;
@@ -43,10 +42,6 @@ public class Properties {
 
     public Float getR_c() {
         return r_c;
-    }
-
-    public void setR_c(float r_c) {
-        this.r_c = r_c;
     }
 
     public boolean isBrute() {
@@ -63,5 +58,21 @@ public class Properties {
 
     public void setPeriodic(boolean periodic) {
         this.periodic = periodic;
+    }
+
+    public void setM(Integer m) {
+        M = m;
+    }
+
+    public void setR_c(Float r_c) {
+        this.r_c = r_c;
+    }
+
+    public boolean isTest() {
+        return test;
+    }
+
+    public void setTest(boolean test) {
+        this.test = test;
     }
 }

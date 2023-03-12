@@ -9,6 +9,8 @@ public class ConsoleParser {
     public static String staticFile;
     public static String dynamicFile;
 
+    public static Integer test;
+
     private static Options createOptions(){
         Options options = new Options();
 
@@ -28,6 +30,7 @@ public class ConsoleParser {
         options.addOption("radius", true, "Radio de interacción de las partículas");
         options.addOption("periodic", false, "Condición de contorno periódicas");
         options.addOption("brute", false, "Corre el método de fuerza bruta");
+        options.addOption("test", false, "Corre el testeo numero #i");
         return options;
     }
 
@@ -55,6 +58,10 @@ public class ConsoleParser {
 
             if(cmd.hasOption("brute")){
                 properties.setBrute(true);
+            }
+
+            if(cmd.hasOption("test")){
+                properties.setTest(true);
             }
 
             dynamicFile = cmd.getOptionValue("dynamicFile");

@@ -8,6 +8,7 @@ public class CIM {
     private static Properties properties;
 
     public static void main(String[] args) throws Exception {
+
         Properties properties = new Properties();
 
         try {
@@ -22,7 +23,12 @@ public class CIM {
         Parser.dynamicParser(particles, ConsoleParser.dynamicFile);
 
         if (properties.getR_c() == null)
-            properties.setR_c(15);
+            properties.setR_c(15F);
+
+        if(properties.isTest()){
+            bestMForDensity(properties, particles);
+            return;
+        }
 
         if (properties.getM() != null){
             if(properties.getL()/(float) properties.getM() <= (properties.getR_c() + 2* properties.getR())) {
@@ -32,11 +38,21 @@ public class CIM {
         } else
             properties.setM(CIM.calculateM(properties.getL(), properties.getR_c(), properties.getR()));
 
+        long start = System.currentTimeMillis();
+
         if (!properties.isBrute()) {
             cellIndexMethod(properties, particles);
         } else {
             bruteForceMethod(properties, particles);
         }
+
+        long time = System.currentTimeMillis() - start;
+        System.out.println("Algoritmo: " + (properties.isBrute() ? "Brute Force" : "Cell Index Method"));
+        System.out.println("Periodic: " + properties.isPeriodic());
+        System.out.println("M: " + properties.getM());
+        System.out.println("r_c: " + properties.getR_c());
+        System.out.println("Tiempo de ejecución: ");
+        System.out.println(time + " ms");
 
         try {
             FileWriter myWriter;
@@ -46,6 +62,36 @@ public class CIM {
                 myWriter = new FileWriter("src/main/resources/output.txt");
             for (Particle p: particles) {
                 myWriter.write(p.getId() + "\t" + p.printNeighbour() + "\n");
+            }
+            myWriter.close();
+        } catch (IOException e) {
+            System.out.println("Ocurrió un error al abrir el output.txt.");
+            e.printStackTrace();
+        }
+
+
+    }
+
+    private static void bestMForDensity(Properties prop, List<Particle> particles) {
+        try {
+            FileWriter myWriter = new FileWriter("src/main/resources/test/best_m_for_density_times.txt");
+            myWriter.write("N: " + prop.getN() + "\n");
+            if(prop.isBrute()) {
+                long start = System.currentTimeMillis();
+                bruteForceMethod(prop, particles);
+                long time = System.currentTimeMillis() - start;
+                myWriter.write("Brute Force " + "\n" + "Tiempo: " + time + " ms" + "\n");
+            }
+            else {
+                prop.setM(calculateM(prop.getL(), prop.getR_c(), prop.getR()));
+                for (int i = 0; i < 13; i++) {
+                    if(i != 0)
+                        prop.setM(prop.getM() - 1);
+                    long start = System.currentTimeMillis();
+                    cellIndexMethod(prop, particles);
+                    long time = System.currentTimeMillis() - start;
+                    myWriter.write("M: " + prop.getM() + " Tiempo: " + time + " ms" + "\n");
+                }
             }
             myWriter.close();
         } catch (IOException e) {

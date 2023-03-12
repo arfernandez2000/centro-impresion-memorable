@@ -1,0 +1,3 @@
+N: 50000
+Brute Force 
+Tiempo: 26833 ms
